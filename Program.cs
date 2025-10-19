@@ -1,6 +1,7 @@
  using Microsoft.EntityFrameworkCore;
 
 using ProductApi.Models;
+using ProductApi.Endpoints;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,5 +30,9 @@ var logger = app.Services.GetRequiredService<ILogger<Program>>();
 logger.LogInformation("Can connect to database: {CanConnect}", canConnect);
 
 app.MapGet("/", static () => "Hello World!");
+
+// Map endpoint groups from separate files
+app.MapProductEndpoints();
+app.MapCategoryEndpoints();
 
 app.Run();

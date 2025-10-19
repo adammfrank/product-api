@@ -12,22 +12,22 @@ namespace ProductApi.Migrations
         {
             // Seed Categories
             migrationBuilder.Sql(@"
-                INSERT INTO ""Categories"" (""Id"", ""Name"", ""Description"", ""IsActive"") VALUES
-                    (1, 'Electronics', 'Electronic gadgets and devices', TRUE),
-                    (2, 'Books', 'Books across various genres', TRUE),
-                    (3, 'Home', 'Home and kitchen essentials', TRUE)
+                INSERT INTO ""Categories"" (""Name"", ""Description"", ""IsActive"") VALUES
+                    ('Electronics', 'Electronic gadgets and devices', TRUE),
+                    ('Books', 'Books across various genres', TRUE),
+                    ('Home', 'Home and kitchen essentials', TRUE)
                 ON CONFLICT (""Id"") DO NOTHING;
             ");
 
             // Seed Products
             // Note: CreatedDate is stored as timestamptz; use NOW() for current timestamp
             migrationBuilder.Sql(@"
-                INSERT INTO ""Products"" (""Id"", ""Name"", ""Description"", ""Price"", ""StockQuantity"", ""CreatedDate"", ""IsActive"", ""CategoryId"") VALUES
-                    (1, 'Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 150, NOW(), TRUE, 1),
-                    (2, 'USB-C Charger', 'Fast charging USB-C power adapter', 19.99, 200, NOW(), TRUE, 1),
-                    (3, 'Sci-Fi Novel', 'A captivating science fiction story', 14.95, 80, NOW(), TRUE, 2),
-                    (4, 'Cookbook', 'Recipes for quick meals', 24.50, 60, NOW(), TRUE, 2),
-                    (5, 'Coffee Maker', '12-cup drip coffee maker', 49.00, 40, NOW(), TRUE, 3)
+                INSERT INTO ""Products"" (""Name"", ""Description"", ""Price"", ""StockQuantity"", ""CreatedDate"", ""IsActive"", ""CategoryId"") VALUES
+                    ('Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 150, NOW(), TRUE, 1),
+                    ('USB-C Charger', 'Fast charging USB-C power adapter', 19.99, 200, NOW(), TRUE, 1),
+                    ('Sci-Fi Novel', 'A captivating science fiction story', 14.95, 80, NOW(), TRUE, 2),
+                    ('Cookbook', 'Recipes for quick meals', 24.50, 60, NOW(), TRUE, 2),
+                    ('Coffee Maker', '12-cup drip coffee maker', 49.00, 40, NOW(), TRUE, 3)
                 ON CONFLICT (""Id"") DO NOTHING;
             ");
         }

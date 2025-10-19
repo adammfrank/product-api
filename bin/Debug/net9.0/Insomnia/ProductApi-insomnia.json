@@ -1,0 +1,141 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2025-10-19T00:00:00.000Z",
+  "__export_source": "insomnia.core ProductApi",
+  "resources": [
+    {
+      "_id": "wrk_productapi",
+      "_type": "workspace",
+      "name": "ProductApi",
+      "description": "Workspace for testing ProductApi endpoints"
+    },
+    {
+      "_id": "env_productapi_base",
+      "_type": "environment",
+      "parentId": "wrk_productapi",
+      "name": "Base Environment",
+      "data": {
+        "base_url": "http://localhost:5290",
+        "product_id": 1,
+        "category_id": 1
+      }
+    },
+    {
+      "_id": "fld_products",
+      "_type": "request_group",
+      "parentId": "wrk_productapi",
+      "name": "Products",
+      "environment": {},
+      "metaSortKey": -1
+    },
+    {
+      "_id": "req_products_get_all",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "GET /api/products (active with category)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/products",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_products_get_by_id",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "GET /api/products/{id}",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/products/{{ _.product_id }}",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_products_post",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "POST /api/products",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/products",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Wireless Mouse\",\n  \"description\": \"Ergonomic wireless mouse\",\n  \"price\": 29.99,\n  \"stockQuantity\": 100,\n  \"categoryId\": {{ _.category_id }}\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "parameters": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_products_put",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "PUT /api/products/{id}",
+      "method": "PUT",
+      "url": "{{ _.base_url }}/api/products/{{ _.product_id }}",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Updated Name\",\n  \"description\": \"Updated description\",\n  \"price\": 39.99,\n  \"stockQuantity\": 75,\n  \"categoryId\": {{ _.category_id }}\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "parameters": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_products_delete",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "DELETE /api/products/{id}",
+      "method": "DELETE",
+      "url": "{{ _.base_url }}/api/products/{{ _.product_id }}",
+      "body": {},
+      "headers": [],
+      "parameters": [],
+      "authentication": {}
+    },
+
+    {
+      "_id": "fld_categories",
+      "_type": "request_group",
+      "parentId": "wrk_productapi",
+      "name": "Categories",
+      "environment": {},
+      "metaSortKey": -2
+    },
+    {
+      "_id": "req_categories_get_all",
+      "_type": "request",
+      "parentId": "fld_categories",
+      "name": "GET /api/categories (active)",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/categories",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {}
+    },
+    {
+      "_id": "req_categories_post",
+      "_type": "request",
+      "parentId": "fld_categories",
+      "name": "POST /api/categories",
+      "method": "POST",
+      "url": "{{ _.base_url }}/api/categories",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n  \"name\": \"Electronics\",\n  \"description\": \"Electronic gadgets\"\n}"
+      },
+      "headers": [
+        { "name": "Content-Type", "value": "application/json" }
+      ],
+      "parameters": [],
+      "authentication": {}
+    }
+  ]
+}
