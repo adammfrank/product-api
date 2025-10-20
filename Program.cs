@@ -18,6 +18,7 @@ builder.Services.AddDbContext<Db>((sp, options) =>
 
 // Scoped because it depends on DbContext which is also scoped to avoid concurrency issues
 builder.Services.AddScoped<CategoryService>(); 
+builder.Services.AddScoped<ProductService>();
 
 
 var app = builder.Build();
