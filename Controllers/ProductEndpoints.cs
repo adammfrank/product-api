@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ProductApi.Models;
-using Microsoft.AspNetCore.Routing;
 
 namespace ProductApi.Endpoints;
 
@@ -136,24 +135,10 @@ public static class ProductEndpoints
 
             product.IsActive = false;
             await db.SaveChangesAsync();
-            return Results.Ok(product);
+            return Results.NoContent();
         });
 
         return routes;
     }
 }
 
-public record ProductCreateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
-public record ProductUpdateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
-
-public record CategorySummaryDto(int Id, string Name, string Description, bool IsActive);
-public record ProductReadDto(
-    int Id,
-    string Name,
-    string Description,
-    decimal Price,
-    int StockQuantity,
-    DateTime CreatedDate,
-    bool IsActive,
-    CategorySummaryDto Category
-);

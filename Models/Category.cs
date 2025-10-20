@@ -11,4 +11,25 @@ namespace ProductApi.Models
 
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
+
+    public record CategoryCreateDto(string Name, string? Description);
+    public record ProductSummaryDto(
+        int Id,
+        string Name,
+        string Description,
+        decimal Price,
+        int StockQuantity,
+        DateTime CreatedDate,
+        bool IsActive,
+        int CategoryId
+    );
+
+    public record CategoryWithProductsDto(
+        int Id,
+        string Name,
+        string Description,
+        bool IsActive,
+        List<ProductSummaryDto> Products
+    );
+
 }

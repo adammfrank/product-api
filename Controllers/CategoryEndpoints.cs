@@ -1,0 +1,39 @@
+using Microsoft.EntityFrameworkCore;
+using ProductApi.Models;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Mvc;
+using ProductApi.Services;
+
+namespace ProductApi.Endpoints;
+
+public static class CategoryEndPoints
+{
+
+    public static IEndpointRouteBuilder MapCategoryEndpoints(this IEndpointRouteBuilder routes)
+    {
+        // GET /api/categories - All active categories, including their products
+        routes.MapGet("/api/categories", async ([FromServices] CategoryService categoryService) =>
+        {
+            var categories = await categoryService.GetAllCategoriesAsync();
+            return Results.Ok(categories);
+        });
+
+        // POST /api/categories - Create category
+        routes.MapPost("/api/categories", async (CategoryCreateDto dto, Db db) =>
+        {
+            try
+            {
+                var categoryService = new CategoryService(db);
+                var created = await categoryService.CreateCategoryAsync(dto);
+                return Results.Created($"/api/categories/{created.Id}", created);
+            }
+            catch (ArgumentException ex)
+            {
+                return Results.BadRequest(new { error = ex.Message });
+            }
+        });
+
+        return routes;
+    }
+}
+

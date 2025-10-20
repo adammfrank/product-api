@@ -11,7 +11,22 @@ namespace ProductApi.Models
         public bool IsActive { get; set; }
 
         public int CategoryId { get; set; }
-        
+
         public Category? Category { get; set; }
     }
+    public record ProductCreateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
+    public record ProductUpdateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
+
+    public record CategorySummaryDto(int Id, string Name, string Description, bool IsActive);
+    public record ProductReadDto(
+        int Id,
+        string Name,
+        string Description,
+        decimal Price,
+        int StockQuantity,
+        DateTime CreatedDate,
+        bool IsActive,
+        CategorySummaryDto Category
+    );
+
 }

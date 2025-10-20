@@ -1,7 +1,7 @@
  using Microsoft.EntityFrameworkCore;
-
 using ProductApi.Models;
 using ProductApi.Endpoints;
+using ProductApi.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,12 +9,15 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.Logging.SetMinimumLevel(LogLevel.Information);
+builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogLevel.Information);
 
 builder.Services.AddDbContext<Db>((sp, options) =>
 {
- 
   options.UseNpgsql("Host=localhost;Port=5432;Username=product_user;Password=change_me;Database=productdb");
 });
+
+// Scoped because it depends on DbContext which is also scoped to avoid concurrency issues
+builder.Services.AddScoped<CategoryService>(); 
 
 
 var app = builder.Build();
