@@ -15,6 +15,7 @@ namespace ProductApi.Services
         public async Task<List<ProductReadDto>> GetActiveProductsAsync()
         {
             var result = await _db.Products
+                .AsNoTracking()
                 .Where(p => p.IsActive)
                 .Select(p => new ProductReadDto(
                     p.Id,
@@ -33,6 +34,7 @@ namespace ProductApi.Services
         public async Task<ProductReadDto?> GetActiveProductByIdAsync(int id)
         {
             var result = await _db.Products
+                .AsNoTracking()
                 .Where(p => p.Id == id && p.IsActive)
                 .Select(p => new ProductReadDto(
                     p.Id,

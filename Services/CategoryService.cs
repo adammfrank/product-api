@@ -15,6 +15,7 @@ namespace ProductApi.Services
         public async Task<List<CategoryWithProductsDto>> GetAllCategoriesAsync()
         {
             return await _db.Categories
+                         .AsNoTracking()
                          .Where(c => c.IsActive)
                          .Select(c => new CategoryWithProductsDto(
                              c.Id,
