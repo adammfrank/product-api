@@ -13,7 +13,9 @@ builder.Logging.AddFilter("Microsoft.EntityFrameworkCore.Database.Command", LogL
 
 builder.Services.AddDbContext<Db>((sp, options) =>
 {
-  options.UseNpgsql("Host=localhost;Port=5432;Username=product_user;Password=change_me;Database=productdb");
+  var config = sp.GetRequiredService<IConfiguration>();
+  var connectionString = config.GetConnectionString("DefaultConnection");
+  options.UseNpgsql(connectionString);
 });
 
 // Scoped because it depends on DbContext which is also scoped to avoid concurrency issues
@@ -25,13 +27,35 @@ var app = builder.Build();
 
 
 await using var scope = app.Services.CreateAsyncScope();
-var db = scope.ServiceProvider.GetRequiredService<Db>();
-var canConnect = await db.Database.CanConnectAsync();
-await db.Database.MigrateAsync();
 
-// Get logger and log the connection status
+var db = scope.ServiceProvider.GetRequiredService<Db>();
 var logger = app.Services.GetRequiredService<ILogger<Program>>();
-logger.LogInformation("Can connect to database: {CanConnect}", canConnect);
+var maxRetries = 10;
+var delayMs = 2000;
+var connected = false;
+for (int i = 0; i < maxRetries; i++)
+{
+  try
+  {
+    connected = await db.Database.CanConnectAsync();
+    if (connected)
+    {
+      logger.LogInformation($"Connected to database on attempt {i+1}");
+      break;
+    }
+  }
+  catch (Exception ex)
+  {
+    logger.LogWarning(ex, $"Database connection attempt {i+1} failed");
+  }
+  await Task.Delay(delayMs);
+}
+if (!connected)
+{
+  logger.LogError($"Could not connect to database after {maxRetries} attempts");
+  throw new Exception("Could not connect to database");
+}
+await db.Database.MigrateAsync();
 
 app.MapGet("/", static () => "Hello World!");
 
