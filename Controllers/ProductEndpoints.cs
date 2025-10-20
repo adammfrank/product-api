@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
 using Microsoft.EntityFrameworkCore;
 using ProductApi.Models;
 using ProductApi.Services;
@@ -26,6 +27,9 @@ public static class ProductEndpoints
         // POST /api/products - Create product
         routes.MapPost("/api/products", async (ProductCreateDto dto, [FromServices] ProductService productService) =>
         {
+            var (isValid, errorResult) = ProductApi.Infrastructure.ValidationHelper.Validate(dto);
+            if (!isValid) return Results.BadRequest(errorResult!);
+
             try
             {
                 var result = await productService.CreateProductAsync(dto);
@@ -40,6 +44,9 @@ public static class ProductEndpoints
         // PUT /api/products/{id} - Update product (404 if not found or inactive)
         routes.MapPut("/api/products/{id:int}", async (int id, ProductUpdateDto dto, [FromServices] ProductService productService) =>
         {
+            var (isValid, errorResult) = ProductApi.Infrastructure.ValidationHelper.Validate(dto);
+            if (!isValid) return Results.BadRequest(errorResult!);
+
             try
             {
                 var product = await productService.UpdateProductAsync(id, dto);
@@ -75,5 +82,7 @@ public static class ProductEndpoints
 
         return routes;
     }
+
+    // ...existing code...
 }
 

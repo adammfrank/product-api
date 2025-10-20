@@ -35,6 +35,33 @@ logger.LogInformation("Can connect to database: {CanConnect}", canConnect);
 
 app.MapGet("/", static () => "Hello World!");
 
+// Global exception handler - return ProblemDetails JSON and log errors
+app.UseExceptionHandler(errorApp =>
+{
+  errorApp.Run(async context =>
+  {
+    var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
+    var feature = context.Features.Get<Microsoft.AspNetCore.Diagnostics.IExceptionHandlerFeature>();
+    var ex = feature?.Error;
+
+    int status = StatusCodes.Status500InternalServerError;
+    string title = "An unexpected error occurred.";
+
+    logger.LogError(ex, "Unhandled exception while processing request");
+
+    var problem = new Microsoft.AspNetCore.Mvc.ProblemDetails
+    {
+      Status = status,
+      Title = title,
+      Detail = null
+    };
+
+    context.Response.StatusCode = status;
+    context.Response.ContentType = "application/problem+json";
+    await context.Response.WriteAsJsonAsync(problem);
+  });
+});
+
 // Map endpoint groups from separate files
 app.MapProductEndpoints();
 app.MapCategoryEndpoints();

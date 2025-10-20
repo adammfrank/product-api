@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ProductApi.Models
 {
     public class Category
@@ -12,7 +14,11 @@ namespace ProductApi.Models
         public IEnumerable<Product> Products { get; set; } = new List<Product>();
     }
 
-    public record CategoryCreateDto(string Name, string? Description);
+    public record CategoryCreateDto(
+        [property: Required]
+        [property: MaxLength(200)]
+        string Name,
+        string? Description);
     public record ProductSummaryDto(
         int Id,
         string Name,

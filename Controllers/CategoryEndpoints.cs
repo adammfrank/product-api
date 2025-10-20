@@ -21,6 +21,9 @@ public static class CategoryEndPoints
         // POST /api/categories - Create category
         routes.MapPost("/api/categories", async (CategoryCreateDto dto, Db db) =>
         {
+            var (isValid, errorResult) = ProductApi.Infrastructure.ValidationHelper.Validate(dto);
+            if (!isValid) return Results.BadRequest(errorResult!);
+
             try
             {
                 var categoryService = new CategoryService(db);

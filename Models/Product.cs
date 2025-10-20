@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace ProductApi.Models
 {
     public class Product
@@ -14,8 +16,30 @@ namespace ProductApi.Models
 
         public Category? Category { get; set; }
     }
-    public record ProductCreateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
-    public record ProductUpdateDto(string Name, string Description, decimal Price, int StockQuantity, int CategoryId);
+
+    public record ProductCreateDto(
+        [property: Required]
+        string Name,
+        [property: Required]
+        string Description,
+        [property: Range(0, double.MaxValue)]
+        decimal Price,
+        [property: Range(0, int.MaxValue)]
+        int StockQuantity,
+        [property: Required]
+        int CategoryId);
+
+    public record ProductUpdateDto(
+        [property: Required]
+        string Name,
+        [property: Required]
+        string Description,
+        [property: Range(0, double.MaxValue)]
+        decimal Price,
+        [property: Range(0, int.MaxValue)]
+        int StockQuantity,
+        [property: Required]
+        int CategoryId);
 
     public record CategorySummaryDto(int Id, string Name, string Description, bool IsActive);
     public record ProductReadDto(
