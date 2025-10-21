@@ -25,7 +25,7 @@ namespace ProductApi.Services
                     p.StockQuantity,
                     p.CreatedDate,
                     p.IsActive,
-                    new CategorySummaryDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
+                    new CategoryTruncatedDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
                 )).ToListAsync();
 
             return result;
@@ -44,7 +44,7 @@ namespace ProductApi.Services
                     p.StockQuantity,
                     p.CreatedDate,
                     p.IsActive,
-                    new CategorySummaryDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
+                    new CategoryTruncatedDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
                 )).FirstOrDefaultAsync();
 
             return result;
@@ -83,7 +83,7 @@ namespace ProductApi.Services
                     p.StockQuantity,
                     p.CreatedDate,
                     p.IsActive,
-                    new CategorySummaryDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
+                    new CategoryTruncatedDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
                 ))
                 .FirstAsync();
 
@@ -122,7 +122,7 @@ namespace ProductApi.Services
                     p.StockQuantity,
                     p.CreatedDate,
                     p.IsActive,
-                    new CategorySummaryDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
+                    new CategoryTruncatedDto(p.Category!.Id, p.Category!.Name, p.Category!.Description, p.Category!.IsActive)
                 ))
                 .FirstAsync();
 

@@ -41,7 +41,7 @@ namespace ProductApi.Models
         [property: Required]
         int CategoryId);
 
-    public record CategorySummaryDto(int Id, string Name, string Description, bool IsActive);
+    public record CategoryTruncatedDto(int Id, string Name, string Description, bool IsActive);
     public record ProductReadDto(
         int Id,
         string Name,
@@ -50,7 +50,7 @@ namespace ProductApi.Models
         int StockQuantity,
         DateTime CreatedDate,
         bool IsActive,
-        CategorySummaryDto Category
+        CategoryTruncatedDto Category
     );
 
 }

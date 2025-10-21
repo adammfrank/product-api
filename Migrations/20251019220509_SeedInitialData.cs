@@ -21,19 +21,19 @@ namespace ProductApi.Migrations
                     ON CONFLICT (""Id"") DO NOTHING;
                 ");
 
-                // Seed 20 Products, distributed across categories by name
-                migrationBuilder.Sql(@"
+            // Seed 20 Products, distributed across categories
+            migrationBuilder.Sql(@"
                     INSERT INTO ""Products"" (""Name"", ""Description"", ""Price"", ""StockQuantity"", ""CreatedDate"", ""IsActive"", ""CategoryId"") VALUES
                         ('Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 150, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
                         ('USB-C Charger', 'Fast charging USB-C power adapter', 19.99, 200, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
                         ('Bluetooth Headphones', 'Noise-cancelling over-ear headphones', 89.99, 75, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
-                        ('Smartphone Stand', 'Adjustable phone stand', 12.50, 120, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
+                        ('Smartphone Stand', 'Adjustable phone stand', 12.50, 0, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
                         ('LED Desk Lamp', 'Dimmable LED lamp with USB port', 34.99, 60, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Electronics')),
 
                         ('Sci-Fi Novel', 'A captivating science fiction story', 14.95, 80, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
                         ('Cookbook', 'Recipes for quick meals', 24.50, 60, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
                         ('Mystery Thriller', 'A page-turning mystery', 16.99, 90, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
-                        ('Children''s Picture Book', 'Illustrated book for kids', 9.99, 110, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
+                        ('Children''s Picture Book', 'Illustrated book for kids', 9.99, 0, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
                         ('History Textbook', 'Comprehensive world history', 39.95, 30, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Books')),
 
                         ('Coffee Maker', '12-cup drip coffee maker', 49.00, 40, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Home')),
@@ -55,40 +55,14 @@ namespace ProductApi.Migrations
                         ('Sneakers', 'Lightweight running shoes', 59.99, 60, NOW(), TRUE, (SELECT ""Id"" FROM ""Categories"" WHERE ""Name""='Clothing'))
                     ON CONFLICT (""Id"") DO NOTHING;
                 ");
-
-            // Seed Products
-            // Note: CreatedDate is stored as timestamptz; use NOW() for current timestamp
-            migrationBuilder.Sql(@"
-                INSERT INTO ""Products"" (""Name"", ""Description"", ""Price"", ""StockQuantity"", ""CreatedDate"", ""IsActive"", ""CategoryId"") VALUES
-                    ('Wireless Mouse', 'Ergonomic wireless mouse', 29.99, 150, NOW(), TRUE, 1),
-                    ('USB-C Charger', 'Fast charging USB-C power adapter', 19.99, 200, NOW(), TRUE, 1),
-                    ('Sci-Fi Novel', 'A captivating science fiction story', 14.95, 80, NOW(), TRUE, 2),
-                    ('Cookbook', 'Recipes for quick meals', 24.50, 60, NOW(), TRUE, 2),
-                    ('Coffee Maker', '12-cup drip coffee maker', 49.00, 40, NOW(), TRUE, 3)
-                ON CONFLICT (""Id"") DO NOTHING;
-            ");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            // Remove seeded Products by name (to match above)
-            migrationBuilder.Sql(@"
-                DELETE FROM ""Products"" WHERE ""Name"" IN (
-                    'Wireless Mouse', 'USB-C Charger', 'Bluetooth Headphones', 'Smartphone Stand', 'LED Desk Lamp',
-                    'Sci-Fi Novel', 'Cookbook', 'Mystery Thriller', 'Children''s Picture Book', 'History Textbook',
-                    'Coffee Maker', 'Blender', 'Vacuum Cleaner', 'Nonstick Frying Pan', 'Bath Towel Set',
-                    'Building Blocks', 'Board Game', 'Action Figure', 'Dollhouse', 'Puzzle Set',
-                    'Men''s T-Shirt', 'Women''s Jeans', 'Baseball Cap', 'Winter Scarf', 'Sneakers'
-                );
-            ");
-
-            // Remove seeded Categories by name
-            migrationBuilder.Sql(@"
-                DELETE FROM ""Categories"" WHERE ""Name"" IN (
-                    'Electronics', 'Books', 'Home', 'Toys', 'Clothing'
-                );
-            ");
+            migrationBuilder.Sql("""
+                TRUNCATE TABLE "Products", "Categories" RESTART IDENTITY CASCADE;
+                """);
         }
     }
 }

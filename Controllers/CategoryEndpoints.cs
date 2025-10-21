@@ -36,7 +36,15 @@ public static class CategoryEndPoints
             }
         });
 
+        // GET /api/categories/{id}/summary - Get summary data for a specific category 
+        routes.MapGet("/api/categories/{id}/summary", async (int id, [FromServices] CategoryService categoryService) =>
+        {
+            var category = await categoryService.GetCategorySummaryByIdAsync(id);
+            return category is not null ? Results.Ok(category) : Results.NotFound();
+        });
+
         return routes;
+
     }
 }
 

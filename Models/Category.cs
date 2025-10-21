@@ -38,4 +38,21 @@ namespace ProductApi.Models
         List<ProductSummaryDto> Products
     );
 
+    // Represents a price range with decimal boundaries
+    public record PriceRange(decimal Min, decimal Max);
+
+    // Summary DTO with optional analytics fields. The first four parameters remain
+    // positional to preserve existing call sites elsewhere in the project.
+    public record CategorySummaryDto(
+        int CategoryId,
+        string CategoryName,
+        string CategoryDescription,
+        int TotalProducts,
+        int ActiveProducts,
+        decimal AveragePrice,
+        decimal TotalInventoryValue,
+        PriceRange PriceRange,
+        int OutOfStockCount
+    );
+
 }
