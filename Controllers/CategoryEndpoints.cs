@@ -12,7 +12,7 @@ public static class CategoryEndPoints
     public static IEndpointRouteBuilder MapCategoryEndpoints(this IEndpointRouteBuilder routes)
     {
         // GET /api/categories - All active categories, including their products
-        routes.MapGet("/api/categories", async ([FromServices] CategoryService categoryService) =>
+        routes.MapGet("/api/categories", async ([FromServices] ICategoryService categoryService) =>
         {
             var categories = await categoryService.GetAllCategoriesAsync();
             return Results.Ok(categories);
@@ -37,7 +37,7 @@ public static class CategoryEndPoints
         });
 
         // GET /api/categories/{id}/summary - Get summary data for a specific category 
-        routes.MapGet("/api/categories/{id}/summary", async (int id, [FromServices] CategoryService categoryService) =>
+        routes.MapGet("/api/categories/{id}/summary", async (int id, [FromServices] ICategoryService categoryService) =>
         {
             var category = await categoryService.GetCategorySummaryByIdAsync(id);
             return category is not null ? Results.Ok(category) : Results.NotFound();

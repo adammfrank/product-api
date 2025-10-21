@@ -11,21 +11,21 @@ public static class ProductEndpoints
     public static IEndpointRouteBuilder MapProductEndpoints(this IEndpointRouteBuilder routes)
     {
         // GET /api/products - All active products with category info
-        routes.MapGet("/api/products", async ([FromServices] ProductService productService) =>
+        routes.MapGet("/api/products", async ([FromServices] IProductService productService) =>
         {
             var result = await productService.GetActiveProductsAsync();
             return Results.Ok(result);
         });
 
         // GET /api/products/{id} - Specific product (404 if not found or inactive)
-        routes.MapGet("/api/products/{id:int}", async (int id, [FromServices] ProductService productService) =>
+        routes.MapGet("/api/products/{id:int}", async (int id, [FromServices] IProductService productService) =>
         {
             var result = await productService.GetActiveProductByIdAsync(id);
             return result is null ? Results.NotFound() : Results.Ok(result);
         });
 
         // POST /api/products - Create product
-        routes.MapPost("/api/products", async (ProductCreateDto dto, [FromServices] ProductService productService) =>
+        routes.MapPost("/api/products", async (ProductCreateDto dto, [FromServices] IProductService productService) =>
         {
             var (isValid, errorResult) = ProductApi.Infrastructure.ValidationHelper.Validate(dto);
             if (!isValid) return Results.BadRequest(errorResult!);
@@ -42,7 +42,7 @@ public static class ProductEndpoints
         });
 
         // PUT /api/products/{id} - Update product (404 if not found or inactive)
-        routes.MapPut("/api/products/{id:int}", async (int id, ProductUpdateDto dto, [FromServices] ProductService productService) =>
+        routes.MapPut("/api/products/{id:int}", async (int id, ProductUpdateDto dto, [FromServices] IProductService productService) =>
         {
             var (isValid, errorResult) = ProductApi.Infrastructure.ValidationHelper.Validate(dto);
             if (!isValid) return Results.BadRequest(errorResult!);
@@ -67,7 +67,7 @@ public static class ProductEndpoints
         });
 
         // DELETE /api/products/{id} - Soft delete (set IsActive = false)
-        routes.MapDelete("/api/products/{id:int}", async (int id, [FromServices] ProductService productService) =>
+        routes.MapDelete("/api/products/{id:int}", async (int id, [FromServices] IProductService productService) =>
         {
             try
             {
@@ -83,6 +83,5 @@ public static class ProductEndpoints
         return routes;
     }
 
-    // ...existing code...
 }
 

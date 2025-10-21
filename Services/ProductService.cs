@@ -3,7 +3,8 @@ using ProductApi.Models;
 
 namespace ProductApi.Services
 {
-    class ProductService
+
+    class ProductService : IProductService
     {
         private readonly Db _db;
 

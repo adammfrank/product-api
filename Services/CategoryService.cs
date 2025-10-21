@@ -3,7 +3,8 @@ using ProductApi.Models;
 
 namespace ProductApi.Services
 {
-    class CategoryService
+
+    class CategoryService : ICategoryService
     {
         private readonly Db _db;
 
@@ -68,7 +69,6 @@ namespace ProductApi.Services
         }
 
 
-        // I'm aware this isn't super efficient. I haven't written a lot of SQL, and didn't want to copy and paste something I didn't fully understand.
         public async Task<CategorySummaryDto?> GetCategorySummaryByIdAsync(int id)
         {
             return await _db.Categories
