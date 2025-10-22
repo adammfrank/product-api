@@ -99,6 +99,28 @@
       "parameters": [],
       "authentication": {}
     },
+    {
+      "_id": "req_products_search",
+      "_type": "request",
+      "parentId": "fld_products",
+      "name": "GET /api/products/search",
+      "method": "GET",
+      "url": "{{ _.base_url }}/api/products/search",
+      "body": {},
+      "parameters": [
+        { "name": "searchTerm", "value": "mouse" },
+        { "name": "categoryId", "value": "1" },
+        { "name": "minPrice", "value": "10" },
+        { "name": "maxPrice", "value": "100" },
+        { "name": "inStock", "value": "true" },
+        { "name": "sortBy", "value": "price" },
+        { "name": "sortOrder", "value": "asc" },
+        { "name": "pageNumber", "value": "1" },
+        { "name": "pageSize", "value": "20" }
+      ],
+      "headers": [],
+      "authentication": {}
+    },
 
     {
       "_id": "fld_categories",

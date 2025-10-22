@@ -80,6 +80,27 @@ public static class ProductEndpoints
             }
         });
 
+        // GET /api/products/search - advanced search with filtering, sorting and paging
+        routes.MapGet("/api/products/search", async (
+            [FromServices] IProductService productService,
+            [FromQuery] string? searchTerm,
+            [FromQuery] int? categoryId,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice,
+            [FromQuery] bool? inStock,
+            [FromQuery] string? sortBy,
+            [FromQuery] string? sortOrder,
+            [FromQuery] int? pageNumber,
+            [FromQuery] int? pageSize
+        ) =>
+        {
+            var pn = pageNumber.GetValueOrDefault(1);
+            var ps = pageSize.GetValueOrDefault(5);
+
+            var paged = await productService.SearchAsync(searchTerm, categoryId, minPrice, maxPrice, inStock, sortBy, sortOrder, pn, ps);
+
+            return Results.Ok(paged);
+        });
         return routes;
     }
 

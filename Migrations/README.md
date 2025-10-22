@@ -4,7 +4,6 @@
 3. Api is available at `http://localhost:7101/api` or `https://localhost:5290/api`
 4. You can test the api in Insomnia with [ProductApi-insomnia.json](../Insomnia/ProductApi-insomnia.json)
 
-
 # Architecture
 
 ## Overall Approach
@@ -29,9 +28,29 @@ dependencies. This isn't complex enough to require Kubernetes.
 
 # Design Decisions
 
-I Applied the SRP by splitting my code between Program, Controllers, Services, Models, and Migrations, and by splitting Category and Product. 
+I applied the SRP by splitting my code between Program, Controllers, Services, Models, and Migrations, and by splitting Category and Product. 
 
-I
+I applied Dependency Inversion and Dependency Injection by using defining interfaces for the services and adding them to the DI container. The controller only knows about the interface, and in the future, I could swap the implementation for the controller by only changing
+`builder.Services.AddScoped<ICategoryService, CategoryService>();` to reference a different implementation.
+
+TODO: Complex endpoint choice and rationale
+
+I chose not to implement the repository pattern because of the small scale of this project. It doesn't require me to be able to interact with different data sources, or swap dev/production/in memory databases. Testing is simple because I just saved the endpoints in insomnia, and when I want to start over, I just run the migrations up and down again.
+
+The indexes are the primary ids, and the foreign key CategoryId.
+
+# What I Would Do with More Time
+
+1. Improve the error handling to be more uniform.
+2. See if there is a way to use the Minimal API without needing to inject the same service in each method.
+3. Add an index for IsActive
+4. Move db secrets into env vars.
+
+# Assumptions and Tradeoffs
+
+The main assumption is the scale of this project. There are things I could have done that would make sense in a production environment that would have just taken too long for this assignment. I could have added Nginx between the web ui and the api, I could have run it in Kubernetes, and I could have included unit tests that swapped the real DB for an in memory one.
+
+Tradeoffs: 
 
 
 

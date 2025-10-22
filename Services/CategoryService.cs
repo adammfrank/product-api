@@ -68,24 +68,5 @@ namespace ProductApi.Services
             return created;
         }
 
-
-        public async Task<CategorySummaryDto?> GetCategorySummaryByIdAsync(int id)
-        {
-            return await _db.Categories
-                .AsNoTracking()
-                .Where(c => c.Id == id && c.IsActive)
-                .Select(c => new CategorySummaryDto(
-                    c.Id,
-                    c.Name,
-                    c.Description,
-                    c.Products.Count(),
-                    c.Products.Count(p => p.IsActive),
-                    c.Products.Average(p => p.Price),
-                    c.Products.Sum(p => p.Price * p.StockQuantity),
-                    new PriceRange(c.Products.Min(p => p.Price), c.Products.Max(p => p.Price)),
-                    c.Products.Count(p => p.StockQuantity == 0)
-                ))
-                .FirstOrDefaultAsync();
-        }
     }
 }
