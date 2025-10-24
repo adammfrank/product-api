@@ -16,7 +16,6 @@ I used DTOs in order to limit the data being sent to/from the API. e.g. Category
 
 ## Database Schema
 I made assumptions of the types from the property names. If I had more time I would have put more indexes in, but I don't have a lot of SQL experience, and I didn't want to include code that I couldn't explain thoroughly.
-With more time I would have added an index for IsActive on both tables because it is used by nearly all of the GET endpoints.
 
 ## Technology Choices
 
@@ -42,16 +41,15 @@ I chose to do the search endpoint because I wasn't as comfortable with writing a
 
 I chose not to implement the repository pattern because of the small scale of this project. It doesn't require me to be able to interact with different data sources, or swap dev/production/in memory databases. Testing is simple because I just saved the endpoints in insomnia, and when I want to start over, I just run the migrations up and down again.
 
-The indexes are the primary ids, and the foreign key CategoryId. 
+The indexes are the primary ids, and the foreign key is CategoryId. I put indexes on IsActive for both tables because it is frequently used in queries. With more time and usage data I would add indexes to some or all of the columns in product, depending on how users used the Search endpoint.
 
 # What I Would Do with More Time
 
 1. Improve the error handling to be more uniform.
 2. See if there is a way to use the Minimal API without needing to inject the same service in each method.
-3. Add an index for IsActive
-5. Typed responses in the API
-6. Optional features from the front end.
-7. Reorganize directory (ProductApi is a confusing name for a project with an angular client inside)
+3. Typed responses in the API
+4. Optional features from the front end.
+5. Reorganize directory (ProductApi is a confusing name for a project with an angular client inside)
 
 Production considerations:
 1. Move db secrets into env vars.
@@ -64,11 +62,11 @@ Production considerations:
 
 # Assumptions and Tradeoffs
 
+## Assumptions
 The main assumption is the scale of this project. There are things I could have done that would make sense in a production environment that would have just taken too long for this assignment. I could have added Nginx between the web ui and the api, I could have run it in Kubernetes, and I could have included unit tests that swapped the real DB for an in memory one.
 
-Tradeoffs: 
-
-I chose Minimal API instead of MVC because it is simpler for smaller scale projects. 
-
+## Tradeoffs
+I chose Minimal API instead of MVC because it is simpler for smaller scale projects. I chose to use Insomnia to test the API instead of including automated tests because it is faster for the small scale, and because there isn't a lot of logic to test which isn't easily tested just by hitting the API.
+I chose to use DbContext directly instead of creating a Repository, again because of the small scale and time constraints, and the fact that I wasn't using unit testing.
 
 

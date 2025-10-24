@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductApi.Models
 {
+    [Index(nameof(IsActive))]
     public class Product
     {
         public int Id { get; set; }

@@ -5,7 +5,7 @@ using ProductApi.Models;
         Task<ProductReadDto> CreateProductAsync(ProductCreateDto dto);
         Task<ProductReadDto?> GetActiveProductByIdAsync(int id);
         Task<List<ProductReadDto>> GetActiveProductsAsync();
-        Task<ProductApi.Models.PagedResult<ProductReadDto>> SearchAsync(
+        Task<PagedResult<ProductReadDto>> SearchAsync(
             string? searchTerm,
             int? categoryId,
             decimal? minPrice,

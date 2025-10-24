@@ -97,7 +97,7 @@ app.UseExceptionHandler(errorApp =>
 
 
 app.UseCors();
-// Map endpoint groups from separate files
+
 app.MapProductEndpoints();
 app.MapCategoryEndpoints();
 

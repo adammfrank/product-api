@@ -143,7 +143,7 @@ namespace ProductApi.Services
             await _db.SaveChangesAsync();
         }
 
-        public async Task<ProductApi.Models.PagedResult<ProductReadDto>> SearchAsync(
+        public async Task<PagedResult<ProductReadDto>> SearchAsync(
             string? searchTerm,
             int? categoryId,
             decimal? minPrice,

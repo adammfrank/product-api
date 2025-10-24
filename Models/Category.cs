@@ -1,7 +1,9 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace ProductApi.Models
 {
+    [Index(nameof(IsActive))]
     public class Category
     {
         public int Id { get; set; }
@@ -19,6 +21,7 @@ namespace ProductApi.Models
         [property: MaxLength(200)]
         string Name,
         string? Description);
+
     public record ProductSummaryDto(
         int Id,
         string Name,
@@ -38,11 +41,8 @@ namespace ProductApi.Models
         List<ProductSummaryDto> Products
     );
 
-    // Represents a price range with decimal boundaries
     public record PriceRange(decimal Min, decimal Max);
 
-    // Summary DTO with optional analytics fields. The first four parameters remain
-    // positional to preserve existing call sites elsewhere in the project.
     public record CategorySummaryDto(
         int CategoryId,
         string CategoryName,
