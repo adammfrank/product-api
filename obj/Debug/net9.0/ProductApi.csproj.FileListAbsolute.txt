@@ -127,3 +127,9 @@
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/zh-Hans/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/zh-Hant/Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.resources.dll
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/Insomnia/ProductApi-insomnia.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/angular.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/package-lock.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/package.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.app.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.json
+/Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.spec.json

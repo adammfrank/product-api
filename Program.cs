@@ -22,9 +22,18 @@ builder.Services.AddDbContext<Db>((sp, options) =>
 builder.Services.AddScoped<ICategoryService, CategoryService>(); 
 builder.Services.AddScoped<IProductService, ProductService>();
 
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.WithOrigins("http://localhost:4200") // Angular dev server
+          .AllowAnyHeader()
+          .AllowAnyMethod();
+  });
+});
 
 var app = builder.Build();
-
 
 await using var scope = app.Services.CreateAsyncScope();
 
@@ -86,6 +95,8 @@ app.UseExceptionHandler(errorApp =>
   });
 });
 
+
+app.UseCors();
 // Map endpoint groups from separate files
 app.MapProductEndpoints();
 app.MapCategoryEndpoints();

@@ -1,0 +1,14 @@
+<h1>This is the List</h1>
+
+<ul>
+@for(product of products; track product.id) {
+<li>{{product.name}}
+<ul>
+    <li>Price: {{product.price}}</li>
+    <li>Category: {{product.category.name}}</li>
+    <li>Stock Quantity: {{product.stockQuantity}}</li>
+</ul>
+</li>
+
+}
+</ul>
