@@ -23,7 +23,6 @@ services:
       ASPNETCORE_ENVIRONMENT: Development
       ConnectionStrings__DefaultConnection: "Host=productapi-db;Port=5432;Database=productdb;Username=productuser;Password=productpass"
     ports:
-      - "7101:7101"
       - "5290:5290"
     depends_on:
       - db

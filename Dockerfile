@@ -8,6 +8,5 @@ RUN dotnet publish -c Release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS final
 WORKDIR /app
 COPY --from=build /app .
-EXPOSE 7101
 EXPOSE 5290
 ENTRYPOINT ["dotnet", "ProductApi.dll"]

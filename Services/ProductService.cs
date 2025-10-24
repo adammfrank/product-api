@@ -185,7 +185,6 @@ namespace ProductApi.Services
                     query = query.Where(p => p.StockQuantity == 0);
             }
 
-            // Sorting
             var isDesc = string.Equals(sortOrder, "desc", StringComparison.OrdinalIgnoreCase);
             query = (sortBy ?? "name").ToLower() switch
             {
@@ -195,7 +194,6 @@ namespace ProductApi.Services
                 _ => isDesc ? query.OrderByDescending(p => p.Name) : query.OrderBy(p => p.Name),
             };
 
-            // Pagination and totals
             pageNumber = Math.Max(1, pageNumber);
             pageSize = Math.Clamp(pageSize, 1, 100);
 
@@ -219,7 +217,7 @@ namespace ProductApi.Services
                 ))
                 .ToListAsync();
 
-            return new ProductApi.Models.PagedResult<ProductReadDto>(items, totalCount, pageNumber, pageSize, totalPages);
+            return new PagedResult<ProductReadDto>(items, totalCount, pageNumber, pageSize, totalPages);
         }
 
     }

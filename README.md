@@ -1,8 +1,9 @@
 # Quick Start
 1. Install docker
 2. docker compose up -d
-3. Api is available at `http://localhost:7101/api` or `https://localhost:5290/api`
+3. Api is available at `https://localhost:5290/api`
 4. You can test the api in Insomnia with [ProductApi-insomnia.json](../Insomnia/ProductApi-insomnia.json)
+5. Within `product-client/` run `npm i` then `npm start` and navigate to `http://localhost:4200`
 
 # Architecture
 
@@ -26,6 +27,10 @@ The database is Postgresql. I chose that because I have some experience with it 
 All services run in docker using docker compose. This allows you to run everything with a single command and not need to install any
 dependencies. This isn't complex enough to require Kubernetes.
 
+I used Copilot through VS Code to help out.
+
+I used DBeaver to interact with the database directly during development.
+
 # Design Decisions
 
 I applied the SRP by splitting my code between Program, Controllers, Services, Models, and Migrations, and by splitting Category and Product. 
@@ -33,18 +38,25 @@ I applied the SRP by splitting my code between Program, Controllers, Services, M
 I applied Dependency Inversion and Dependency Injection by using defining interfaces for the services and adding them to the DI container. The controller only knows about the interface, and in the future, I could swap the implementation for the controller by only changing
 `builder.Services.AddScoped<ICategoryService, CategoryService>();` to reference a different implementation.
 
-TODO: Complex endpoint choice and rationale
+I chose to do the search endpoint because I wasn't as comfortable with writing an efficient aggregation query. The search specification is only concocting a complex where clause after parsing the user input.
 
 I chose not to implement the repository pattern because of the small scale of this project. It doesn't require me to be able to interact with different data sources, or swap dev/production/in memory databases. Testing is simple because I just saved the endpoints in insomnia, and when I want to start over, I just run the migrations up and down again.
 
-The indexes are the primary ids, and the foreign key CategoryId.
+The indexes are the primary ids, and the foreign key CategoryId. 
 
 # What I Would Do with More Time
 
 1. Improve the error handling to be more uniform.
 2. See if there is a way to use the Minimal API without needing to inject the same service in each method.
 3. Add an index for IsActive
-4. Move db secrets into env vars.
+5. Typed responses in the API
+6. Optional features from the front end.
+
+Production considerations:
+1. Move db secrets into env vars.
+2. Add HTTPS
+3. Add indexes for most used columns in the search endpoint.
+
 
 # Assumptions and Tradeoffs
 
