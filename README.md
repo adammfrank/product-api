@@ -51,11 +51,15 @@ The indexes are the primary ids, and the foreign key CategoryId.
 3. Add an index for IsActive
 5. Typed responses in the API
 6. Optional features from the front end.
+7. Reorganize directory (ProductApi is a confusing name for a project with an angular client inside)
 
 Production considerations:
 1. Move db secrets into env vars.
 2. Add HTTPS
 3. Add indexes for most used columns in the search endpoint.
+4. Documentation with OpenApi
+5. Share DTOs between front and back end
+6. Serve client through Nginx
 
 
 # Assumptions and Tradeoffs
@@ -63,6 +67,8 @@ Production considerations:
 The main assumption is the scale of this project. There are things I could have done that would make sense in a production environment that would have just taken too long for this assignment. I could have added Nginx between the web ui and the api, I could have run it in Kubernetes, and I could have included unit tests that swapped the real DB for an in memory one.
 
 Tradeoffs: 
+
+I chose Minimal API instead of MVC because it is simpler for smaller scale projects. 
 
 
 
