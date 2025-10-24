@@ -133,3 +133,4 @@
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.app.json
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.json
 /Users/adamfrank/Dev/dotnet/ProductApi/bin/Debug/net9.0/product-client/tsconfig.spec.json
+/Users/adamfrank/Dev/dotnet/ProductApi/obj/Debug/net9.0/ProductApi.sourcelink.json

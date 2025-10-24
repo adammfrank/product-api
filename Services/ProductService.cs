@@ -205,6 +205,7 @@ namespace ProductApi.Services
             var items = await query
                 .Skip(skip)
                 .Take(pageSize)
+                .AsNoTracking()
                 .Select(p => new ProductReadDto(
                     p.Id,
                     p.Name,
